@@ -1,0 +1,197 @@
+# calc_main.py
+
+import calc_input as ci
+import calc_action as ca
+import calc_put_log as cpl
+import calc_checker as cc
+
+# Программа калькулятор
+
+print('Введите число с которым надо сделать действие')
+num = ci.get_num()
+
+print('выберите действие:')
+print(ca.print_action())
+
+action = int(ci.get_num())
+cc.check_action(action)
+
+
+if action in (1, 2, 3):
+    print('введите делитель: ')
+    devision = ci.get_num()
+    print(devision)
+else:
+    print('введите второе число: ')
+    devision = ci.get_num()
+    print(devision)
+print('-'*30)
+
+cc.check_zero_division(action, devision)
+
+print("Результат: ", ca.get_action(num, action, devision))
+
+cpl.write_log(num, action, devision)
+
+
+
+
+
+
+
+##################################################################################################################################
+
+
+# calc_checker.py
+
+import sys
+import calc_action as ca
+import calc_put_log as cpl
+
+def check_zero_division(action, devision):
+    """
+    Проверка деления на ноль
+    Запись об ошибке заносится в журнал событий (функция write_log_error из модуля calc_put_log)
+    В результате ошибки программа прерывается
+    """
+    if devision == 0 and action in (1, 2, 3):
+        error_type = 'Error: Деление на ноль!'
+        cpl.write_log_error(error_type)
+        print(error_type)
+        sys.exit()
+
+
+def check_num(num):
+    """
+    Проверка что ввели число, допускается запись числа через символ '.'
+    Например ввод числа: .2 соответствует 0.2 или 2. соответствует 2.0
+    Запись об ошибке заносится в журнал событий (функция write_log_error из модуля calc_put_log)
+    В результате ошибки программа прерывается
+    """
+    nums = ['0','1','2','3','4','5','6','7','8','9','.']
+    for i in num:
+        if i not in nums or num == '.':
+            error_type = 'Error: Не число!'
+            cpl.write_log_error(error_type)
+            print(error_type)
+            sys.exit()
+
+
+def check_action(action):
+    """
+    Проверка что выбранное действие есть в калькуляторе
+    Запись об ошибке заносится в журнал событий (функция write_log_error из модуля calc_put_log)
+    В результате ошибки программа прерывается
+    """
+    if int(action) not in list(ca.action_dict().keys()):
+        error_type = 'Error: В калькуляторе нет такого действия!'
+        cpl.write_log_error(error_type)
+        print(error_type)
+        sys.exit()
+
+
+
+
+
+
+
+##################################################################################################################################
+
+
+# calc_put_log.py
+
+import calc_action as ca
+import datetime
+
+def write_log(num, action, devision):
+    """
+    Запись успешного действия в журнал событий.
+    """
+    with open('calc_log.txt', 'a', encoding='utf-8') as file:
+        file.write(f'\n{str(datetime.datetime.now())}')
+        file.write(f'\nбыли выбраны следующие позиции: первое число: {num}, второе число: {devision}, операция: {action} ({ca.action_dict()[action]})')
+        file.write(f'\nрезультат: {ca.get_action(num, action, devision)}')
+        file.write('\n-------------------------------')
+
+
+def write_log_error(error_type):
+    """
+    Запись успешного действия в журнал событий.
+    """
+    with open('calc_log.txt', 'a', encoding='utf-8') as file:
+        file.write(f'\n{str(datetime.datetime.now())}')
+        file.write(f'\nДействие вызвало ошибку')
+        file.write(f'\n{error_type}')
+        file.write('\n-------------------------------')
+
+
+
+
+
+
+
+
+##################################################################################################################################
+
+
+# calc_input.py
+
+import calc_checker as cc
+
+def get_num():
+    """
+    Запрашивает у пользователя число.
+    Проверяет введенные символы что бы они были числом (с помощью функции check_num() из модуля calc_checker)
+    """
+    number = input('введите число: ')
+    cc.check_num(number)
+    return float(number)
+
+
+
+
+
+
+
+
+##################################################################################################################################
+
+
+# calc_action.py
+
+
+def action_dict():
+    """
+    Содержит словарь с действиями возможными в калькуляторе
+    """
+    act_dict = {1: 'деление нацело', 2: 'остаток от деления', 3: 'деление', 4: 'сложение', 5: 'вычитание', 6: 'умножение'}
+    return act_dict
+
+
+def get_action(num, action, devision):
+    """
+    Производит действия с указанными цифрами в зависимости от выбранного действия
+    """
+    if action == 1:
+        return num // devision
+    if action == 2:
+        return num % devision
+    if action == 3:
+        return num / devision
+    if action == 4:
+        return num + devision
+    if action == 5:
+        return num - devision
+    if action == 6:
+        return num * devision
+
+
+def print_action():
+    """
+    Выводит словарь с возможными действиями ввиде строки
+    """
+    for key, value in action_dict().items():
+        print(key, '-', value, end=' ; ')
+
+
+
