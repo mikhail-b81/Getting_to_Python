@@ -1,0 +1,26 @@
+row_id;id;surname;name;phone;city
+11;1;Ivanov;Sergey;123654789;Moscow
+12;2;Petrova;Svetlana;258963147;Saint Petersburg
+13;3;Samoilov;Petr;369874125;Moscow
+14;4;Timofeew;Andrey;123456789;Moscow
+15;5;Pronin;Nikolay;159623487;Saint Petersburg
+16;6;Ivanov;Alex;326519847;Omsk
+17;7;Smirnov;Andrey;258163295;Saint Petersburg
+18;8;Nikinova;Tatiana;789623541;Smolensk
+19;9;Somova;Elena;256398741;Moscow
+20;10;Gonin;Stanislav;253652148;Saint Petersburg
+21;11;Yorov;Andrey;125896347;Pskov
+22;9;Novova;Elena;256398741;Moscow
+23;12;Trunov;Igor;123987654;Moscow
+24;13;Novikov;Sergey;456321789;Pskov
+25;3;Samoilov;Petr;369874125;Noginsk
+26;3;Samoilov;Petr;369874125;Dmitrov
+27;14;Tastaenko;Mick;426985317;Novosibirsk
+28;15;Ivanov;Mikhail;789632145;Moscow
+29;16;Petrov;Mikhail;253140250;Saint Petersburg
+30;17;Lomanov;Oleg;852036917;Moscow
+31;18;Remonova;Natalia;412305698;Sochi
+32;19;Ivanov;Sergey;856302149;Sochi
+33;20;Testov;Test;0000000000;Test
+34;20;Testov;Test;111111111;Test
+35;21;Kurochkin;Fedor;456321321;Samara
